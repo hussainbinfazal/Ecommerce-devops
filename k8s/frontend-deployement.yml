@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: ecommerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      name: frontend-pod
+      namespace: ecommerce
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: hussainbinfazal/quickcartecommerce-frontend:latest
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5173
+

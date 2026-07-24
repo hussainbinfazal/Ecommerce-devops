@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb-deployment
+  namespace: ecommerce
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      name: mongodb-pod
+      namespace: ecommerce
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:latest
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: mongodb-pv
+          mountPath: /data/db
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: ecommerce-backend-secrets
+              key: MONGODB_URI
+      volumes:
+        - name: mongodb-pv
+          persistentVolumeClaim:
+            claimName: monogodb-pvc
+             

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: ecommerce
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      name: backend-pod
+      namespace: ecommerce
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: hussainbinfazal/quickcartecommerce-backend:latest
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5001
+        env:
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: ecommerce-backend-secrets
+              key: MONGODB_URI
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ecommerce-backend-secrets
+              key: JWT_SECRET
+        - name: CLIENT_URL
+          valueFrom:
+            secretKeyRef:
+              name: ecommerce-backend-secrets
+              key: CLIENT_URL      

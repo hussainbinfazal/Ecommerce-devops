@@ -1,0 +1,28 @@
+# Base Image
+FROM node:lts-alpine AS base
+WORKDIR /usr/src/app
+COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+
+
+# Dev Stage
+FROM base AS development
+ENV NODE_ENV=development
+RUN npm install --silent
+COPY . .
+EXPOSE 5173
+CMD ["npm","run","dev"]
+
+
+# Prod Stage
+FROM base AS production
+RUN npm ci --silent
+COPY . .
+RUN npm run build
+# ENV NODE_ENV=production
+# EXPOSE 5173
+
+# NGINX for reverse proxy
+FROM nginx:alpine AS runtime
+COPY --from=production /usr/src/app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
