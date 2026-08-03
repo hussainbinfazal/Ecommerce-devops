@@ -2,9 +2,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: frontend
+  namespace: ecommerce
 spec:
   selector:
     app: frontend
   ports:
-  - port: 80
+  - port: 80 #Nginix port that handles reverse proxy
     targetPort: 80

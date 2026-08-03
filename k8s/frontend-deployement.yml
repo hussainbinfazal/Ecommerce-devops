@@ -26,5 +26,5 @@ spec:
             memory: "512Mi"
             cpu: "500m"
         ports:
-        - containerPort: 5173
+        - containerPort: 80
 
