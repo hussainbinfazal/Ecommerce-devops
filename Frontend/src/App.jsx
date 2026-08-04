@@ -58,13 +58,15 @@ import ScrollLoader from "./components/layout/ScrollLoader";
 
 import { ClerkProvider } from "@clerk/clerk-react";
 import AuthWatcher from "./middlewares/auth/AuthWatcher.jsx";
+import { config } from "./config";
 function App() {
   const [count, setCount] = useState(0);
-  const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
-
+  // const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_KEY);
+  const stripePromise = loadStripe(config.STRIPE_PUBLISHABLE_KEY);
+  // publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}
   return (
     <Provider store={store}>
-      <ClerkProvider publishableKey={import.meta.env.VITE_CLERK_PUBLISHABLE_KEY}>
+      <ClerkProvider publishableKey={config.CLERK_PUBLISHABLE_KEY}>
         <AuthProvider>
           {/* Auth watcher for contionous checking of token  */}
           <ScrollLoader />
