@@ -1,0 +1,47 @@
+# Dependencies
+node_modules
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose.yml
+docker-compose.*.yml
+
+# Frontend/build output
+dist
+build
+.vite
+
+# Tests / coverage
+coverage
+.nyc_output
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode
+.idea
+
+# Temporary files
+tmp
+temp
+.cache
+*.tmp
+
+# Documentation
+README.md

@@ -8,7 +8,7 @@ metadata:
 data:
   config.js: |
     window.__APP_CONFIG__ = {
-      CLERK_PUBLISHABLE_KEY: "",
-      STRIPE_PUBLISHABLE_KEY: "",
+      CLERK_PUBLISHABLE_KEY: "pk_test_a25vd24tbWFrby00My5jbGVyay5hY2NvdW50cy5kZXYk",
+      STRIPE_PUBLISHABLE_KEY: "pk_test_51RFDqwFbg3KjtiJFiV7N57NTqkJnZhzCXt2lbN9vKVPhLOrufOvDWBJRaDsekSHF5sola3im8n1TyfIzjARFyIba00nJgUvQWB",
       API_BASE_URL: "/api"
     }; 
