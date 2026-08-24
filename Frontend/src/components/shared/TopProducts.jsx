@@ -188,10 +188,17 @@ export const ProductCard = ({
             }}
           >
             <img
+              // src={
+              //   product?.productImage?.startsWith("http")
+              //     ? product.productImage
+              //     : `${import.meta.env.VITE_API_URL}/uploads/productImages/${
+              //         product?.productImage
+              //       }`
+              // }
               src={
                 product?.productImage?.startsWith("http")
                   ? product.productImage
-                  : `${import.meta.env.VITE_API_URL}/uploads/productImages/${
+                  : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${
                       product?.productImage
                     }`
               }
@@ -233,6 +240,13 @@ export const ProductCard = ({
               <h4 className="text-lg font-semibold mb-2">{product?.name}</h4>
               <div className="flex items-center mb-2 w-full ">
                 <img
+                  // src={
+                  //   product?.productImage?.startsWith("http")
+                  //     ? product.productImage
+                  //     : `${
+                  //         import.meta.env.VITE_API_URL
+                  //       }/uploads/productImages/${product?.productImage}`
+                  // }
                   src={
                     product?.productImage?.startsWith("http")
                       ? product.productImage

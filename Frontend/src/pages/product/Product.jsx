@@ -230,7 +230,7 @@ const Product = () => {
               ))}
             </div>
             <div className="w-[70%] h-full flex items-center justify-center mx-4 my-3 bg-[#F5F5F5] rounded-md">
-              <img
+              {/* <img
                 src={
                   mainImage?.startsWith("http")
                     ? mainImage
@@ -238,6 +238,13 @@ const Product = () => {
                         import.meta.env.VITE_API_URL
                       }/uploads/productImages/${mainImage}`
                 }
+                alt=""
+                className="w-4/5 h-4/5 object-cover"
+              /> */}
+              <img
+                src={
+                mainImage?.startsWith("http") ? mainImage
+                : `${window.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${mainImage}`}
                 alt=""
                 className="w-4/5 h-4/5 object-cover"
               />

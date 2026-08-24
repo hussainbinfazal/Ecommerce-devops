@@ -219,11 +219,14 @@ const Header = () => {
               {user ? (
                 user?.profileImage ? (
                   <img
+                    // src={
+                    //   user?.profileImage ||
+                    //   `${import.meta.env.VITE_API_URL}/uploads/userProfile/${
+                    //     user?.profileImage
+                    //   }`
+                    // }
                     src={
-                      user?.profileImage ||
-                      `${import.meta.env.VITE_API_URL}/uploads/userProfile/${
-                        user?.profileImage
-                      }`
+                      user.profileImage || `${window.__APP_CONFIG__.API_BASE_URL}/uploads/userProfile/${user.profileImage}`
                     }
                     alt=""
                     className="w-10 h-10 z-60 rounded-full text-gray-600 hover:text-blue-500"
