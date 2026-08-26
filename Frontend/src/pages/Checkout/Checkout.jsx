@@ -156,7 +156,8 @@ const Checkout = () => {
       const data = response.payload;
 
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        // key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        key: whindow.__APP_CONFIG__.RAZORPAY_KEY_ID,
         amount: cart.total * 100, // Amount in paisa
         currency: "INR",
         name: "QuickCart",
@@ -475,12 +476,25 @@ const Checkout = () => {
                   cartItems.map((item, index) => (
                     <div className="w-full h-[60px] px-4 py-2 border border-gray-200  bg-white hover:bg-gray-50 rounded-md">
                       <div className="w-[4/5] h-full flex justify-start items-center gap-6 px-2">
-                        <img
+                        {/* <img
                           src={
                             item?.product?.productImage?.startsWith("http")
                               ? item?.product.productImage
                               : `${
                                   import.meta.env.VITE_API_URL
+                                }/uploads/productImages/${
+                                  item?.product?.productImage
+                                }`
+                          }
+                          alt=""
+                          className="w-[50px] h-[50px] object-contain"
+                        /> */}
+                        <img
+                          src={
+                            item?.product?.productImage?.startsWith("http")
+                              ? item?.product.productImage
+                              : `${
+                                  whindow.__APP_CONFIG__.API_BASE_URL
                                 }/uploads/productImages/${
                                   item?.product?.productImage
                                 }`

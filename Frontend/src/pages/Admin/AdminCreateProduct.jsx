@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
-import { createProduct } from "../../redux/adminSlices/adminProductsSlice";
+import { createDescription, createProduct } from "../../redux/adminSlices/adminProductsSlice";
 import { FaBahai } from "react-icons/fa";
 import { axiosInstance } from "../../lib/axios";
-import { generateProductDescription } from "../../utils/gemini";
+import { generateProductDescription } from "../../../../Backend/utils/gemini";
 import { motion } from "framer-motion";
 
 const AdminCreateProduct = () => {
@@ -61,7 +61,7 @@ const AdminCreateProduct = () => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
+      
 
       Object.entries(form).forEach(([key, value]) => {
         if (key === "tags" && typeof value === "string") {
@@ -130,11 +130,12 @@ const AdminCreateProduct = () => {
       return;
     }
     try {
-      const description = await generateProductDescription(
-        form.name,
-        form.brand
-      );
-      console.log(description);
+      const formData = new FormData();
+      formData.append("name", form.name);
+      formData.append("brand", form.brand);
+      const response = await dispatch(createDescription(formData)).unwrap()
+      const description = response.description
+      // console.log(description);
       setForm((prev) => ({
         ...prev,
         description: description,

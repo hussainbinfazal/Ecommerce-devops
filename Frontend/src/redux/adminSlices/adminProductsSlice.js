@@ -29,8 +29,24 @@ export const createProduct = createAsyncThunk('adminProducts/createProduct', asy
         throw error;
     }
 });
+export const createDescription = createAsyncThunk('adminProducts/generate-description', async (formData, { rejectWithValue }) => {
+    try {
+        const config = {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${localStorage.getItem('token')}`
+            }
+        };
+        const response = await axiosInstance.post('/products', formData, config);
+        toast.success('Product created successfully!');
+        return response.data;
+    } catch (error) {
+        const message = error.response.data.message || "Failed to create product.";
+        toast.error("Something went wrong. " + message)
+    }
+});
 export const fetchProducts = createAsyncThunk('adminProducts/fetchProducts', async () => {
-    
+
     try {
         const config = {
             headers: {
@@ -38,7 +54,7 @@ export const fetchProducts = createAsyncThunk('adminProducts/fetchProducts', asy
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
         };
-        const response = await axiosInstance.get('/products',config);
+        const response = await axiosInstance.get('/products', config);
         return response.data;
     } catch (error) {
         throw error;
@@ -100,7 +116,7 @@ export const adminProductsSlice = createSlice({
     reducers: {
         resetDeleteFlag: (state) => {
             state.isDeleted = false;
-          },
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(createProduct.fulfilled, (state, action) => {

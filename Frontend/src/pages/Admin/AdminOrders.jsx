@@ -278,12 +278,23 @@ const AdminOrders = ({
                         {order.user?.name.split(" ")[0]}{" "}
                       </div>
                       <div className="w-[20%] h-[70px] text-sm md:text-lg lg:text-lg xl:text-lg 2xl:text-lg flex justify-start items-center gap-2 px-2 p-3">
-                        <img
+                        {/* <img
                           src={
                             order.user?.profileImage
                               ? // Add "import.meta.env.VITE_API_URL + user.profileImage" before the url to preview the image
                                 order.user?.profileImage.startsWith("http")
                               ? order.user?.profileImage : `${import.meta.env.VITE_API_URL}/uploads/userProfileImages/${order.user?.profileImage}`
+                              : defaultImage
+                          }
+                          className="w-[50px] h-[50px] rounded-full"
+                          alt=""
+                        /> */}
+                        <img
+                          src={
+                            order.user?.profileImage
+                              ? // Add "import.meta.env.VITE_API_URL + user.profileImage" before the url to preview the image
+                                order.user?.profileImage.startsWith("http")
+                              ? order.user?.profileImage : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/userProfileImages/${order.user?.profileImage}`
                               : defaultImage
                           }
                           className="w-[50px] h-[50px] rounded-full"

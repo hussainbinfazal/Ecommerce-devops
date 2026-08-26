@@ -236,7 +236,7 @@ const AdminEditProduct = () => {
           <label className="text-gray-700 font-semibold">Main Image</label>
           {form.productImage ? (
             <div className="relative w-32 h-32 mb-4">
-              <img
+              {/* <img
                 src={
                   mainImagePreview
                     ? mainImagePreview
@@ -246,6 +246,24 @@ const AdminEditProduct = () => {
                       ? form.productImage
                       : `${
                           import.meta.env.VITE_API_URL
+                        }/uploads/productImages/${form.productImage}`
+                    : form.productImage
+                    ? URL.createObjectURL(form.productImage)
+                    : ""
+                }
+                alt="Main"
+                className="w-full h-full object-cover border rounded"
+              /> */}
+              <img
+                src={
+                  mainImagePreview
+                    ? mainImagePreview
+                    : typeof form.productImage === "string"
+                    ? form.productImage.startsWith("http") ||
+                      form.productImage.startsWith("/")
+                      ? form.productImage
+                      : `${
+                          whindow.__APP_CONFIG__.API_BASE_URL
                         }/uploads/productImages/${form.productImage}`
                     : form.productImage
                     ? URL.createObjectURL(form.productImage)
@@ -315,13 +333,26 @@ const AdminEditProduct = () => {
                 key={idx}
                 className="relative w-24 h-24 border rounded overflow-hidden"
               >
-                <img
+                {/* <img
                   src={
                     typeof img === "string"
                       ? img.startsWith("http") || img.startsWith("/")
                         ? img
                         : `${
                             import.meta.env.VITE_API_URL
+                          }/uploads/productImages/${img}`
+                      : URL.createObjectURL(img)
+                  }
+                  alt={`Image ${idx}`}
+                  className="w-full h-full object-cover"
+                /> */}
+                <img
+                  src={
+                    typeof img === "string"
+                      ? img.startsWith("http") || img.startsWith("/")
+                        ? img
+                        : `${
+                            whindow.__APP_CONFIG__.API_BASE_URL
                           }/uploads/productImages/${img}`
                       : URL.createObjectURL(img)
                   }

@@ -84,8 +84,13 @@ const Orders = () => {
                   {order.orderItems.map((item) => (
                     <div key={item.id} className="p-4 flex">
                       <div className="flex-shrink-0 h-20 w-20 bg-gray-200 rounded-md overflow-hidden">
-                        <img
+                        {/* <img
                           src={item.image.startsWith("http") ? item.image : `${import.meta.env.VITE_API_URL}/uploads/productImages/${item.image}`}
+                          alt={item.name}
+                          className="h-full w-full object-cover"
+                        /> */}
+                        <img
+                          src={item.image.startsWith("http") ? item.image : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${item.image}`}
                           alt={item.name}
                           className="h-full w-full object-cover"
                         />

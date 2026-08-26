@@ -198,12 +198,23 @@ const CartPage = () => {
                           item?.product?.productImage?.startsWith("http")
                             ? item?.product.productImage
                             : `${
-                                import.meta.env.VITE_API_URL
+                                whindow.__APP_CONFIG__.API_BASE_URL
                               }/uploads/productImages/${item?.product?.productImage}`
                         }
                     alt={item?.name}
                     className="w-[50px] h-[50px] object-cover relative"
                   />
+                  {/* <img
+                    src={
+                          item?.product?.productImage?.startsWith("http")
+                            ? item?.product.productImage
+                            : `${
+                                import.meta.env.VITE_API_URL
+                              }/uploads/productImages/${item?.product?.productImage}`
+                        }
+                    alt={item?.name}
+                    className="w-[50px] h-[50px] object-cover relative"
+                  /> */}
                   <span className="text-sm cursor-pointer" onClick={() => navigate(`/product/${item?.product?._id}`)}>{item?.product?.name}</span>
                   <div className="absolute top-2 left-2 w-[20px] h-[5px]  z-40 rounded-full">
                     <RxCross2

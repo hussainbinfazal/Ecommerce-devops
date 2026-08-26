@@ -1,11 +1,9 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 // wen can use it in the backend to generate product descriptions with the API call//
 
 export const generateProductDescription = async (name, brand) => {
-
-
-  try {
-    const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+ try {
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
     const prompt = `
@@ -23,10 +21,7 @@ export const generateProductDescription = async (name, brand) => {
 
     const response = result.response;
     const text = response.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
     return text;
-
-    return response;
   } catch (error) {
     console.error("error", error);
     console.error("Gemini API error:", error.response?.data || error.message);

@@ -3,6 +3,8 @@ const User = require('../model/userModel');
 const fs = require('fs');
 const path = require('path');
 const { faker } = require('@faker-js/faker');
+const { generateProductDescription } = require('../utils/gemini');
+
 const createProduct = async (req, res) => {
   try {
     const productImages = req.files; // multer should give you either an array or an object of files
@@ -358,5 +360,17 @@ const allLikedProducts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
+export const generateProductDescriptionQithAi = async () => {
 
-module.exports = { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts };
+  try {
+    const { name, brand } = req.body;
+    const description = await generateProductDescription(name, brand);
+    res.status(200).json({ message: "Product description generated", description });
+  } catch (error) {
+    // console.error("error", error);
+    // console.error("Gemini API error:", error.response?.data || error.message);
+    throw new Error('Failed to generate description');
+  }
+}
+
+module.exports = { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts, generateProductDescription };

@@ -251,11 +251,23 @@ const HeroSection = () => {
                     onTouchMove={handleTouchMove}
                     onTouchEnd={handleTouchEnd}
                   >
-                    <img
+                    {/* <img
                       src={
                 slide?.productImage?.startsWith("http")
                   ? slide.productImage
                   : `${import.meta.env.VITE_API_URL}/uploads/productImages/${
+                      slide?.productImage
+                    }`
+              }
+                      alt={slide.name}
+                      className="w-full h-full object-cover cursor-pointer p-0"
+                      onClick={() => handleSlideClick(index)}
+                    /> */}
+                    <img
+                      src={
+                slide?.productImage?.startsWith("http")
+                  ? slide.productImage
+                  : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${
                       slide?.productImage
                     }`
               }

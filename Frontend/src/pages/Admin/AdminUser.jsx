@@ -232,11 +232,21 @@ const AdminDashboard = ({
                         {user.name.split(" ")[0]}{" "}
                       </div>
                       <div className="w-[20%] h-[70px] text-sm md:text-lg lg:text-lg xl:text-lg 2xl:text-lg flex justify-start items-center gap-2 px-2 p-3">
-                        <img
+                        {/* <img
                           src={
                             user.profileImage
                               ? // Add"import.meta.env.VITE_API_URL + user.profileImage" to handle the case where the image is not a full URL
                                 user.profileImage || `${import.meta.env.VITE_API_URL}/uploads/userprofile/${user.profileImage}`
+                              : defaultImage
+                          }
+                          className="w-[50px] h-[50px] rounded-full"
+                          alt=""
+                        /> */}
+                        <img
+                          src={
+                            user.profileImage
+                              ? // Add"import.meta.env.VITE_API_URL + user.profileImage" to handle the case where the image is not a full URL
+                                user.profileImage || `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/userprofile/${user.profileImage}`
                               : defaultImage
                           }
                           className="w-[50px] h-[50px] rounded-full"

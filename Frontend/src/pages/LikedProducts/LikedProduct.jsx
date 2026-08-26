@@ -123,12 +123,23 @@ const LikedProduct = () => {
                   >
                     {/* Product Image */}
                     <div className="relative h-48">
-                      <img
+                      {/* <img
                         src={
                           product?.productImage?.startsWith("http")
                             ? product.productImage
                             : `${
                                 import.meta.env.VITE_API_URL
+                              }/uploads/productImages/${product?.productImage}`
+                        }
+                        alt={product.name}
+                        className="w-full h-full object-cover"
+                      /> */}
+                      <img
+                        src={
+                          product?.productImage?.startsWith("http")
+                            ? product.productImage
+                            : `${
+                                whindow.__APP_CONFIG__.API_BASE_URL
                               }/uploads/productImages/${product?.productImage}`
                         }
                         alt={product.name}

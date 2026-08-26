@@ -251,7 +251,7 @@ export const ProductCard = ({
                     product?.productImage?.startsWith("http")
                       ? product.productImage
                       : `${
-                          import.meta.env.VITE_API_URL
+                          whindow.__APP_CONFIG__.API_BASE_URL
                         }/uploads/productImages/${product?.productImage}`
                   }
                   alt=""

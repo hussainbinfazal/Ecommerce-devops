@@ -115,11 +115,22 @@ const AdminProducts = () => {
             }}
           >
             <div className="col-span-2 pl-2">
-              <img
+              {/* <img
                 src={
                 product?.productImage?.startsWith("http")
                   ? product.productImage
                   : `${import.meta.env.VITE_API_URL}/uploads/productImages/${
+                      product?.productImage
+                    }`
+              }
+                alt={product.name}
+                className="w-16 h-16 object-cover rounded"
+              /> */}
+              <img
+                src={
+                product?.productImage?.startsWith("http")
+                  ? product.productImage
+                  : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${
                       product?.productImage
                     }`
               }
