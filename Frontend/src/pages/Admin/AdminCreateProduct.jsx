@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { createDescription, createProduct } from "../../redux/adminSlices/adminProductsSlice";
 import { FaBahai } from "react-icons/fa";
-import { axiosInstance } from "../../lib/axios";
-import { generateProductDescription } from "../../../../Backend/utils/gemini";
 import { motion } from "framer-motion";
 
 const AdminCreateProduct = () => {
