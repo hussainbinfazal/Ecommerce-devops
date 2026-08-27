@@ -29,7 +29,7 @@ const generateProductDescription = async (name, brand) => {
   }
 }
 
-module.export = generateProductDescription
+module.exports = generateProductDescription;
 
 
 
