@@ -1,8 +1,8 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 // wen can use it in the backend to generate product descriptions with the API call//
 
-export const generateProductDescription = async (name, brand) => {
- try {
+const generateProductDescription = async (name, brand) => {
+  try {
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
@@ -28,6 +28,8 @@ export const generateProductDescription = async (name, brand) => {
     throw new Error('Failed to generate description');
   }
 }
+
+module.export = generateProductDescription
 
 
 

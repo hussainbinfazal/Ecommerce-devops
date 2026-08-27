@@ -3,7 +3,7 @@ const User = require('../model/userModel');
 const fs = require('fs');
 const path = require('path');
 const { faker } = require('@faker-js/faker');
-const { generateProductDescription } = require('../utils/gemini');
+const  generateProductDescription  = require('../utils/gemini');
 
 const createProduct = async (req, res) => {
   try {
@@ -360,7 +360,7 @@ const allLikedProducts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
-export const generateProductDescriptionQithAi = async () => {
+const generateProductDescriptionQithAi = async () => {
 
   try {
     const { name, brand } = req.body;
@@ -373,4 +373,4 @@ export const generateProductDescriptionQithAi = async () => {
   }
 }
 
-module.exports = { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts, generateProductDescription };
+module.exports = { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts, generateProductDescriptionQithAi };

@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const { protect, admin } = require('../middlewares/isAuthenticated');
-const {getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts , allLikedProducts, likeProducts, generateProductDescription} = require('../controllers/productControllers');
+const { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts, generateProductDescriptionQithAi } = require('../controllers/productControllers');
 const upload = require('../uploads/productImages/productImages');
 
 router.get('/', getProducts);
 router.get('/:productId', getProductById);
 router.delete('/:productId', protect, admin, deleteProduct);
-router.put('/:productId', protect, admin,upload.array('productImages',12), updateProduct);
-router.post('/', protect, admin,upload.array('productImages',12), createProduct);
+router.put('/:productId', protect, admin, upload.array('productImages', 12), updateProduct);
+router.post('/', protect, admin, upload.array('productImages', 12), createProduct);
 router.post('/fake', seedFakeProducts);
-router.post("/generate-description", generateProductDescription);
+router.post("/generate-description", generateProductDescriptionQithAi);
 
 // Liked products Routes
 router.get('/liked', protect, admin, allLikedProducts);
