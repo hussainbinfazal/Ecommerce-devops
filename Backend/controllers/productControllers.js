@@ -360,7 +360,7 @@ const allLikedProducts = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 }
-const generateProductDescriptionQithAi = async () => {
+const generateProductDescriptionWithAi = async () => {
 
   try {
     const { name, brand } = req.body;
@@ -373,4 +373,4 @@ const generateProductDescriptionQithAi = async () => {
   }
 }
 
-module.exports = { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts, generateProductDescriptionQithAi };
+module.exports = { getProducts, getProductById, deleteProduct, updateProduct, createProduct, seedFakeProducts, allLikedProducts, likeProducts, generateProductDescriptionWithAi };
