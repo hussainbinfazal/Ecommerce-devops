@@ -1,4 +1,4 @@
-const getStoredWishlist = (key) => {
+export const getStoredWishlist = (key) => {
   if (typeof window === 'undefined') return [];
 
   const value = localStorage.getItem(key);
@@ -15,4 +15,24 @@ const getStoredWishlist = (key) => {
   }
 };
 
-module.exports = getStoredWishlist;
+export const setStorageItem = (key, value) => {
+  if (typeof window === 'undefined') return;
+  
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error(`Failed to set localStorage item ${key}:`, error);
+  }
+};
+
+export const removeStorageItem = (key) => {
+  if (typeof window === 'undefined') return;
+  
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error(`Failed to remove localStorage item ${key}:`, error);
+  }
+};
+
+export default getStoredWishlist;

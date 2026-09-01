@@ -1,14 +1,17 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { axiosInstance } from '../../lib/axios';
 import { toast } from 'react-toastify';
+import getStoredWishlist, { setStorageItem, removeStorageItem } from '@/lib/helper';
+
 
 // Async for logged-in users
 export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', async () => {
   try {
+    const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     const res = await axiosInstance.get('/wishlist/get', config);
@@ -22,10 +25,11 @@ export const fetchWishlist = createAsyncThunk('wishlist/fetchWishlist', async ()
 
 export const addToWishlist = createAsyncThunk('wishlist/addToWishlist', async (productId) => {
   try {
+    const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     const res = await axiosInstance.post(`/wishlist/add/${productId}`, {}, config);
@@ -37,10 +41,11 @@ export const addToWishlist = createAsyncThunk('wishlist/addToWishlist', async (p
 
 export const removeFromWishlist = createAsyncThunk('wishlist/removeFromWishlist', async (productId) => {
   try {
+    const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     const res = await axiosInstance.delete(`/wishlist/remove/${productId}`, config);
@@ -53,10 +58,11 @@ export const removeFromWishlist = createAsyncThunk('wishlist/removeFromWishlist'
 // Merge guest likes on login
 export const mergeGuestLikes = createAsyncThunk('wishlist/mergeGuestLikes', async (guestLikes) => {
   try {
+    const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        Authorization: `Bearer ${token}`,
       },
     };
     const res = await axiosInstance.post('/wishlist/merge', { guestLikes }, config);
@@ -87,7 +93,7 @@ const wishlistSlice = createSlice({
 
       if (!exists) {
         state.guestWishlist.push({ product });
-        localStorage.setItem('guestLikes', JSON.stringify(state.guestWishlist));
+        setStorageItem('guestLikes', state.guestWishlist);
         toast.success('Added to wishlist');
       } else {
         toast.info('Product already in wishlist');
@@ -106,13 +112,13 @@ const wishlistSlice = createSlice({
         return itemId !== targetId;
       });
 
-      localStorage.setItem('guestLikes', JSON.stringify(state.guestWishlist));
+      setStorageItem('guestLikes', state.guestWishlist);
       toast.error('Removed from wishlist');
     },
 
     clearGuestWishlist: (state) => {
       state.guestWishlist = [];
-      localStorage.removeItem('guestLikes');
+      removeStorageItem('guestLikes');
     },
 
     fetchGuestWishlist: (state) => {
@@ -121,7 +127,7 @@ const wishlistSlice = createSlice({
     },
     clearWishlist: (state) => {
       state.wishlist = [];
-      localStorage.removeItem('Likes');
+      removeStorageItem('Likes');
     },
     resetDeleteFlag: (state) => {
       state.isDeleted = false;
@@ -135,7 +141,7 @@ const wishlistSlice = createSlice({
       .addCase(fetchWishlist.fulfilled, (state, action) => {
         state.loading = false;
         state.wishlist = action.payload;
-        localStorage.setItem('Likes', JSON.stringify(state.wishlist))
+        setStorageItem('Likes', state.wishlist);
         state.isShown = true;
       })
       .addCase(fetchWishlist.rejected, (state) => {
