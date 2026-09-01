@@ -69,8 +69,8 @@ export const mergeGuestLikes = createAsyncThunk('wishlist/mergeGuestLikes', asyn
 const wishlistSlice = createSlice({
   name: 'wishlist',
   initialState: {
-    wishlist: JSON.parse(localStorage.getItem('Likes')) || [],
-    guestWishlist: JSON.parse(localStorage.getItem('guestLikes')) || [],
+    wishlist: getStoredWishlist('Likes'),
+    guestWishlist: getStoredWishlist('guestLikes'),
     loading: false,
     error: null,
     isShown: false
@@ -116,7 +116,7 @@ const wishlistSlice = createSlice({
     },
 
     fetchGuestWishlist: (state) => {
-      const guestWishlist = JSON.parse(localStorage.getItem('guestLikes')) || [];
+      const guestWishlist = getStoredWishlist('guestLikes');
       state.guestWishlist = guestWishlist;
     },
     clearWishlist: (state) => {
