@@ -11,10 +11,11 @@ const initialState = {
 
 export const fetchCategories = createAsyncThunk('categories/fetchCategories', async () => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         const response = await axiosInstance.get('/categories', config);

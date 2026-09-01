@@ -36,10 +36,11 @@ export const createOrder = createAsyncThunk(
 );
 export const verifyOrder = createAsyncThunk('orders/verifyOrder', async (orderData, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${token}`
             },
         };
         const response = await axiosInstance.post('/orders/verify', orderData, config);
@@ -57,10 +58,11 @@ export const verifyOrder = createAsyncThunk('orders/verifyOrder', async (orderDa
 })
 export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.delete(`/orders/${orderId}`, config);
@@ -72,10 +74,11 @@ export const deleteOrder = createAsyncThunk('orders/deleteOrder', async (orderId
 });
 export const getMyOrders = createAsyncThunk('orders/getMyOrders', async (userId, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get(`/orders/myorders`, config);

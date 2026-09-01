@@ -2,12 +2,16 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { axiosInstance } from '../../lib/axios';
 import { toast } from 'react-toastify';
+import { setStorageItem, removeStorageItem } from '../../lib/helper';
 
 const getCartItems = () => {
     try {
+      if (typeof window === 'undefined') return [];
       return JSON.parse(localStorage.getItem('cart') || '[]');
     } catch (err) {
-      localStorage.removeItem('cart');
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('cart');
+      }
       return [];
     }
   };
@@ -18,7 +22,7 @@ const initialState = {
     cartItems: getCartItems(),
     totalAmount: 0,
     cart:{},
-    guestCartItems: JSON.parse(localStorage.getItem('guestCart')) || [],
+    guestCartItems: typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('guestCart')) || [] : [],
     guestCartDetails: 0,
     isShown: false,
     isShown: false
@@ -26,10 +30,11 @@ const initialState = {
 
 export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get('/cart/get', config);
@@ -42,10 +47,11 @@ export const fetchCartItems = createAsyncThunk('cart/fetchCartItems', async () =
 
 export const addToCart = createAsyncThunk('cart/addToCart', async ({productId,quantity,colour,size},{rejectWithValue}) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.post('/cart/add', { productId, quantity, colour, size }, config);
@@ -56,10 +62,11 @@ export const addToCart = createAsyncThunk('cart/addToCart', async ({productId,qu
 })
 export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (productId,{rejectWithValue}) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.delete(`/cart/remove/${productId}`, config);
@@ -71,10 +78,11 @@ export const removeFromCart = createAsyncThunk('cart/removeFromCart', async (pro
 
 export const clearCart = createAsyncThunk('cart/clearCart', async () => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.delete('/cart/clear', config);
@@ -86,10 +94,11 @@ export const clearCart = createAsyncThunk('cart/clearCart', async () => {
 export const updateCartItemQuantity = createAsyncThunk('cart/updateCartItemQuantity', async ({ productId, qty },{rejectWithValue}) => {
     
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.put(`/cart/update/${productId}`, { qty }, config);
@@ -100,10 +109,11 @@ export const updateCartItemQuantity = createAsyncThunk('cart/updateCartItemQuant
 })
 export const checkoutCart = createAsyncThunk('cart/checkoutCart', async ({},{rejectWithValue}) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.post('/cart/checkout', {}, config);
@@ -116,10 +126,11 @@ export const checkoutCart = createAsyncThunk('cart/checkoutCart', async ({},{rej
 export const mergeGuestCart = createAsyncThunk(
     'cart/mergeGuestCart',
     async (guestCart, { rejectWithValue }) => {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         // Check if guestCart is empty
@@ -143,10 +154,11 @@ export const mergeGuestCart = createAsyncThunk(
 
 export const updateCouponStatus = createAsyncThunk('cart/updateCouponStatus', async(coupon,{rejectWithValue}) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.put('/cart/apply-coupon', { coupon }, config);
@@ -198,7 +210,7 @@ const cartSlice = createSlice({
         setGuestCart(state, action) {
             state.guestCartItems = action.payload;
             state.guestCartSubtotal = calculateGuestSubtotal(state.guestCartItems);
-            localStorage.setItem('guestCart', JSON.stringify(state.guestCartItems));
+            setStorageItem('guestCart', state.guestCartItems);
         },
         addToGuestCart(state, action) {
             const item = action.payload;
@@ -208,7 +220,7 @@ const cartSlice = createSlice({
 
             state.guestCartDetails= calculateGuestCart(state.guestCartItems);
 
-            localStorage.setItem('guestCart', JSON.stringify(state.guestCartItems));
+            setStorageItem('guestCart', state.guestCartItems);
         },
         removeFromGuestCart(state, action) {
             const productId = action.payload._id;
@@ -216,22 +228,24 @@ const cartSlice = createSlice({
             if (removedItem) {
                 state.guestCartItems = state.guestCartItems.filter(item => item?._id !== productId);
             }
-            localStorage.setItem('guestCart', JSON.stringify(state.guestCartItems));
+            setStorageItem('guestCart', state.guestCartItems);
         },
         clearGuestCart(state) {
             state.guestCartItems = [];
             state.guestCartSubtotal = 0;
-            localStorage.removeItem('guestCart');
+            removeStorageItem('guestCart');
         },
         fetchGuestCart(state) {
-            const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
-            state.guestCartItems = guestCart;
+            if (typeof window !== 'undefined') {
+                const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+                state.guestCartItems = guestCart;
+            }
         },
         clearCartItems(state) {
             state.cartItems = [];
             state.totalAmount = 0;
             state.totalItems = 0;
-            localStorage.removeItem('guestCart');
+            removeStorageItem('guestCart');
         },
         resetDeleteFlag: (state) => {
             state.isDeleted = false;
@@ -246,7 +260,7 @@ const cartSlice = createSlice({
             const cart = action.payload.cart;
             const cartItems = action.payload.cart.cartItems;
             state.cartItems = cartItems;
-            localStorage.setItem('cart', JSON.stringify(action.payload.cart.cartItems));
+            setStorageItem('cart', action.payload.cart.cartItems);
             state.isShown = true;
             state.cart = cart;
         });
@@ -330,7 +344,7 @@ const cartSlice = createSlice({
             state.totalItems = action.payload.totalItems;
             state.guestCartItems = [];
             state.guestCartSubtotal = 0;
-            localStorage.removeItem('guestCart');
+            removeStorageItem('guestCart');
             state.isShown = true;
         });
         builder.addCase(mergeGuestCart.rejected, (state) => {

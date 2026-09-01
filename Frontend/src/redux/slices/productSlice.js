@@ -15,10 +15,11 @@ const initialState = {
 
 export const getProducts = createAsyncThunk('products/getProducts', async () => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         const res = await axiosInstance.get('/products', config);
@@ -32,10 +33,11 @@ export const getProducts = createAsyncThunk('products/getProducts', async () => 
 
 export const getProductById = createAsyncThunk('products/getProductById', async (productId, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`,
+                Authorization: `Bearer ${token}`,
             },
         };
         const res = await axiosInstance.get(`/products/${productId}`, config);
@@ -54,7 +56,9 @@ const productSlice = createSlice({
     initialState,
     reducers: {
         logout: (state) => {
-            localStorage.removeItem('token');
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('token');
+            }
             state.user = null;
             state.error = null;
         },

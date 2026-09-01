@@ -2,7 +2,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { axiosInstance } from '../../lib/axios';
-const token = localStorage.getItem('token');
+import { setStorageItem, removeStorageItem } from '../../lib/helper';
+const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
 
 // Initial state
 const initialState = {
@@ -29,7 +30,7 @@ export const registerUser = createAsyncThunk(
 
       const response = await axiosInstance.post('/users/register', userData, config);
       const data = response.data;
-      localStorage.setItem('token', data.token);
+      setStorageItem('token', data.token);
       return data;
     } catch (error) {
       return rejectWithValue(
@@ -56,7 +57,7 @@ export const loginUser = createAsyncThunk(
       );
 
       const data = response.data;
-      localStorage.setItem('token', data.token);
+      setStorageItem('token', data.token);
       return data;
     } catch (error) {
 
@@ -71,7 +72,7 @@ export const checkAuth = createAsyncThunk(
   'user/checkAuth',
   async (_, { rejectWithValue }) => {
     try {
-      const token = localStorage.getItem('token');
+      const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
 
       if (!token) {
         return rejectWithValue('No token found');
@@ -87,7 +88,7 @@ export const checkAuth = createAsyncThunk(
       // Make request to verify token and get user data
       return response.data;
     } catch (error) {
-      localStorage.removeItem('token'); // Clear invalid token
+      removeStorageItem('token'); // Clear invalid token
       return rejectWithValue(
         error.response?.data?.message || 'Authentication failed'
       );
@@ -231,10 +232,11 @@ export const contactUs = createAsyncThunk(
   'user/contactUs',
   async (message, { rejectWithValue }) => {
     try {
+      const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
       const config = {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${token}`,
         },
       };
 
@@ -260,7 +262,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('token');
+      removeStorageItem('token');
       state.user = null;
       state.isAuthenticated = false;
       state.token = null;

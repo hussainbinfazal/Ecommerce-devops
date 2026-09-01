@@ -15,10 +15,11 @@ const initialState = {
 
 export const fetchCoupons = createAsyncThunk('coupon/fetchCoupons', async () => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get('/coupons/get-coupons', config);
@@ -31,10 +32,11 @@ export const fetchCoupons = createAsyncThunk('coupon/fetchCoupons', async () => 
 
 export const createCoupon = createAsyncThunk('coupon/createCoupon', async (couponData , { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.post('/coupons/create-coupon', { couponData }, config);
@@ -46,10 +48,11 @@ export const createCoupon = createAsyncThunk('coupon/createCoupon', async (coupo
 })
 export const deleteCoupon = createAsyncThunk('coupon/deleteCoupon', async (couponId, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.delete(`/coupons/delete-coupon/${couponId}`, config);
@@ -64,10 +67,11 @@ export const updateCoupon= createAsyncThunk('coupon/updateCoupon', async ({coupo
    
 
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.put(`/coupons/update-coupon/${couponId}`, { couponData }, config);
@@ -81,10 +85,11 @@ export const updateCoupon= createAsyncThunk('coupon/updateCoupon', async ({coupo
 
 export const fetchCouponByUser = createAsyncThunk('coupon/fetchCouponByUser', async () => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get('/cart', config);

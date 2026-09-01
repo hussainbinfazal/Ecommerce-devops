@@ -152,7 +152,7 @@ const wishlistSlice = createSlice({
         state.loading = false;
         state.wishlist = action.payload;
         state.guestWishlist = [];
-        localStorage.removeItem('guestLikes');
+        removeStorageItem('guestLikes');
         state.isShown = true;
       });
     builder.addCase(addToWishlist.fulfilled, (state, action) => {

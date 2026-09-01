@@ -17,10 +17,11 @@ export const fetchOrders = createAsyncThunk('admin/fetchOrders', async () => {
 
 
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get('/orders/all',config);
@@ -45,10 +46,11 @@ export const fetchSingleOrder = createAsyncThunk('admin/fetchSingleOrders', asyn
 
 export const updatePaymentStatus = createAsyncThunk('admin/updatePaymentStatus', async ({ orderId, paymentStatus },{ rejectWithValue }) => {
     try {
+       const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
        const config = {  
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${token}`
             },
         } 
         const response = await axiosInstance.put(`/orders/mark-paid/${orderId}`,{paymentStatus},config);
@@ -60,10 +62,11 @@ export const updatePaymentStatus = createAsyncThunk('admin/updatePaymentStatus',
 });
 export const updateOrderStatus = createAsyncThunk('admin/updateOrderStatus', async ({ orderId, orderStatus },{ rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const  config = {
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${token}`
             },
         }
         const response = await axiosInstance.put(`/orders/status/${orderId}`, { orderStatus },config);

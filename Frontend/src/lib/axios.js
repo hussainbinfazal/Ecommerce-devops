@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { removeStorageItem } from './helper';
 
 const axiosInstance = axios.create({
   baseURL: '/api',
@@ -7,7 +8,7 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
+  const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -23,8 +24,10 @@ axiosInstance.interceptors.response.use(
       (error.response.status === 401 || error.response.status === 403)
     ) {
       toast.error('Session expired or unauthorized. Please log in again.');
-      localStorage.removeItem('token');
-      window.location.href = '/login'; // or use navigate if inside React
+      if (typeof window !== 'undefined') {
+        removeStorageItem('token');
+        window.location.href = '/login'; // or use navigate if inside React
+      }
     }
 
     return Promise.reject(error);

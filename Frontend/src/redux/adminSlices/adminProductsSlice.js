@@ -15,10 +15,11 @@ const initialState = {
 
 export const createProduct = createAsyncThunk('adminProducts/createProduct', async (formData, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.post('/products', formData, config);
@@ -31,10 +32,11 @@ export const createProduct = createAsyncThunk('adminProducts/createProduct', asy
 });
 export const createDescription = createAsyncThunk('adminProducts/generate-description', async (formData, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 "Content-Type": "multipart/form-data",
-                "Authorization": `Bearer ${localStorage.getItem('token')}`
+                "Authorization": `Bearer ${token}`
             }
         };
         const response = await axiosInstance.post('/products', formData, config);
@@ -48,10 +50,11 @@ export const createDescription = createAsyncThunk('adminProducts/generate-descri
 export const fetchProducts = createAsyncThunk('adminProducts/fetchProducts', async () => {
 
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get('/products', config);
@@ -62,10 +65,11 @@ export const fetchProducts = createAsyncThunk('adminProducts/fetchProducts', asy
 });
 export const fetchProduct = createAsyncThunk('adminProducts/fetchProduct', async (productId, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.get(`/products/${productId}`, config);
@@ -77,10 +81,11 @@ export const fetchProduct = createAsyncThunk('adminProducts/fetchProduct', async
 
 export const updateProduct = createAsyncThunk('adminProducts/updateProduct', async ({ productId, productData }, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.put(`/products/${productId}`, productData, config);
@@ -94,10 +99,11 @@ export const updateProduct = createAsyncThunk('adminProducts/updateProduct', asy
 
 export const deleteProduct = createAsyncThunk('adminProducts/deleteProduct', async (productId, { rejectWithValue }) => {
     try {
+        const token = typeof window !== 'undefined' ? window.localStorage.getItem('token') : null;
         const config = {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': `Bearer ${token}`
             },
         };
         const response = await axiosInstance.delete(`/products/${productId}`, config);
