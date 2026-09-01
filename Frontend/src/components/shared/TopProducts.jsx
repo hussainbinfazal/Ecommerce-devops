@@ -198,7 +198,7 @@ export const ProductCard = ({
               src={
                 product?.productImage?.startsWith("http")
                   ? product.productImage
-                  : `${window.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${
+                  : `/uploads/productImages/${
                       product?.productImage
                     }`
               }

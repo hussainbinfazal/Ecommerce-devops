@@ -244,7 +244,7 @@ const Product = () => {
               <img
                 src={
                 mainImage?.startsWith("http") ? mainImage
-                : `${window.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${mainImage}`}
+                : `/uploads/productImages/${mainImage}`}
                 alt=""
                 className="w-4/5 h-4/5 object-cover"
               />
