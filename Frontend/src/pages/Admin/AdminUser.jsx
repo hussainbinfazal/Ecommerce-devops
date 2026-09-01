@@ -246,7 +246,7 @@ const AdminDashboard = ({
                           src={
                             user.profileImage
                               ? // Add"import.meta.env.VITE_API_URL + user.profileImage" to handle the case where the image is not a full URL
-                                user.profileImage || `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/userprofile/${user.profileImage}`
+                                user.profileImage || `${window.__APP_CONFIG__.API_BASE_URL}/uploads/userprofile/${user.profileImage}`
                               : defaultImage
                           }
                           className="w-[50px] h-[50px] rounded-full"

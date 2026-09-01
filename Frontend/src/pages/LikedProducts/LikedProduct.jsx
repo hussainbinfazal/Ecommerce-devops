@@ -139,7 +139,7 @@ const LikedProduct = () => {
                           product?.productImage?.startsWith("http")
                             ? product.productImage
                             : `${
-                                whindow.__APP_CONFIG__.API_BASE_URL
+                                window.__APP_CONFIG__.API_BASE_URL
                               }/uploads/productImages/${product?.productImage}`
                         }
                         alt={product.name}

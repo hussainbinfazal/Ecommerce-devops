@@ -267,7 +267,7 @@ const HeroSection = () => {
                       src={
                 slide?.productImage?.startsWith("http")
                   ? slide.productImage
-                  : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${
+                  : `${window.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${
                       slide?.productImage
                     }`
               }

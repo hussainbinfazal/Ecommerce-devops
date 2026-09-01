@@ -90,7 +90,7 @@ const Orders = () => {
                           className="h-full w-full object-cover"
                         /> */}
                         <img
-                          src={item.image.startsWith("http") ? item.image : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${item.image}`}
+                          src={item.image.startsWith("http") ? item.image : `${window.__APP_CONFIG__.API_BASE_URL}/uploads/productImages/${item.image}`}
                           alt={item.name}
                           className="h-full w-full object-cover"
                         />

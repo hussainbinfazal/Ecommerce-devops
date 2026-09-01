@@ -294,7 +294,7 @@ const AdminOrders = ({
                             order.user?.profileImage
                               ? // Add "import.meta.env.VITE_API_URL + user.profileImage" before the url to preview the image
                                 order.user?.profileImage.startsWith("http")
-                              ? order.user?.profileImage : `${whindow.__APP_CONFIG__.API_BASE_URL}/uploads/userProfileImages/${order.user?.profileImage}`
+                              ? order.user?.profileImage : `${window.__APP_CONFIG__.API_BASE_URL}/uploads/userProfileImages/${order.user?.profileImage}`
                               : defaultImage
                           }
                           className="w-[50px] h-[50px] rounded-full"

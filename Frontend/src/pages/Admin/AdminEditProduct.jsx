@@ -263,7 +263,7 @@ const AdminEditProduct = () => {
                       form.productImage.startsWith("/")
                       ? form.productImage
                       : `${
-                          whindow.__APP_CONFIG__.API_BASE_URL
+                          window.__APP_CONFIG__.API_BASE_URL
                         }/uploads/productImages/${form.productImage}`
                     : form.productImage
                     ? URL.createObjectURL(form.productImage)
@@ -352,7 +352,7 @@ const AdminEditProduct = () => {
                       ? img.startsWith("http") || img.startsWith("/")
                         ? img
                         : `${
-                            whindow.__APP_CONFIG__.API_BASE_URL
+                            window.__APP_CONFIG__.API_BASE_URL
                           }/uploads/productImages/${img}`
                       : URL.createObjectURL(img)
                   }

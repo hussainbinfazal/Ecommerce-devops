@@ -157,7 +157,7 @@ const Checkout = () => {
 
       const options = {
         // key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-        key: whindow.__APP_CONFIG__.RAZORPAY_KEY_ID,
+        key: window.__APP_CONFIG__.RAZORPAY_KEY_ID,
         amount: cart.total * 100, // Amount in paisa
         currency: "INR",
         name: "QuickCart",
@@ -494,7 +494,7 @@ const Checkout = () => {
                             item?.product?.productImage?.startsWith("http")
                               ? item?.product.productImage
                               : `${
-                                  whindow.__APP_CONFIG__.API_BASE_URL
+                                  window.__APP_CONFIG__.API_BASE_URL
                                 }/uploads/productImages/${
                                   item?.product?.productImage
                                 }`

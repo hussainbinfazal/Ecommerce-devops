@@ -198,7 +198,7 @@ const CartPage = () => {
                           item?.product?.productImage?.startsWith("http")
                             ? item?.product.productImage
                             : `${
-                                whindow.__APP_CONFIG__.API_BASE_URL
+                                window.__APP_CONFIG__.API_BASE_URL
                               }/uploads/productImages/${item?.product?.productImage}`
                         }
                     alt={item?.name}
